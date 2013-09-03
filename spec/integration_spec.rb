@@ -13,6 +13,9 @@ class Widget < ActiveRecord::Base
     %w(all busy)
   end
   scope :busy, -> { where state: "busy" }
+  def self.ordered
+    order("state DESC")
+  end
 end
 
 describe Filternator do
@@ -24,7 +27,7 @@ describe Filternator do
   example "a basic filter" do
     Widget.create! id: 1, state: "idle"
     Widget.create! id: 2, state: "busy"
-    filter = Filternator.new(scope: Widget)
+    filter = Filternator.new(scope: Widget.ordered)
     result = filter.apply(filter: "busy")
     expect(result.as_json).to eq(
       {

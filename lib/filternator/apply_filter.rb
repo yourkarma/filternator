@@ -46,7 +46,12 @@ module Filternator
 
     def filtered_scope
       if valid_filter?
-        scope.public_send(filter)
+        # ignore 'all' on relations
+        if scope.is_a?(::ActiveRecord::Relation) && filter.to_s == "all"
+          scope
+        else
+          scope.public_send(filter)
+        end
       else
         scope
       end
