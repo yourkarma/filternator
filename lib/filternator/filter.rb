@@ -12,7 +12,12 @@ module Filternator
     end
 
     def stats
-      Hash[ all_filters.map { |filter| [ filter, apply(filter: filter).count ] } ]
+      pairs = all_filters.map { |filter|
+        result = apply(filter: filter).count
+        result = result.keys.first if result.is_a?(Hash) # ActiveRecord `group by` fix
+        [ filter, result ]
+      }
+      Hash[pairs]
     end
 
     def apply(params)
