@@ -14,7 +14,7 @@ module Filternator
     def stats
       pairs = all_filters.map { |filter|
         result = apply(filter: filter).count
-        result = result.keys.first if result.is_a?(Hash) # ActiveRecord `group by` fix
+        result = result.values.inject(:+) if result.is_a?(Hash) # ActiveRecord `group by` fix
         [ filter, result ]
       }
       Hash[pairs]
