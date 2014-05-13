@@ -37,7 +37,7 @@ module Filternator
     end
 
     def paginated_scope
-      filtered_scope.paginate(page: params[:page])
+      filtered_scope.paginate(page: params[:page].presence)
     end
 
     def filter
