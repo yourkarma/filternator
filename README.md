@@ -79,7 +79,7 @@ expect(response.body).to eq({
       email:  "jennifer@example.org"
       # etc...
     }
-  },
+  ],
   meta: {
     filters: ["all", "paying", "beta_users"],
     applied_filter: "all",
